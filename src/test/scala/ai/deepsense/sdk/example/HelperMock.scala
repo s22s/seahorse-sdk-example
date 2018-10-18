@@ -38,13 +38,11 @@ object HelperMock {
     .set("spark.serializer", "org.apache.spark.serializer.KryoSerializer")
     .registerKryoClasses(Array())
 
-  lazy val sparkContext = SparkContext.getOrCreate(sparkConf)
 
   lazy val sparkSession = (new SparkSession.Builder).config(sparkConf).getOrCreate()
 
   lazy val executionContext: ExecutionContext = {
-    val sparkContext = SparkContext.getOrCreate()
-    val sparkSession = new SparkSQLSession(sparkContext)
+    val sparkSQLSession = new SparkSQLSession(sparkSession)
     val catalog = CatalogRecorder.resourcesCatalogRecorder.catalogs
     val innerWorkflowExecutor = new InnerWorkflowExecutor {
       override def execute(
@@ -81,7 +79,7 @@ object HelperMock {
       override def isValid(code: String): Boolean = ???
     }
 
-    val inferContext = InferContext(DataFrameBuilder(sparkSession),
+    val inferContext = InferContext(DataFrameBuilder(sparkSQLSession),
       catalog,
       new DatasourceInMemoryClient(Nil))
 
@@ -89,8 +87,8 @@ object HelperMock {
       CustomCodeExecutionProvider(codeExecutor, codeExecutor, new OperationExecutionDispatcher)
 
     ExecutionContext(
-      sparkContext,
       sparkSession,
+      sparkSQLSession,
       inferContext,
       ExecutionMode.Batch,
       LocalFileSystemClient(),

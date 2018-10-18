@@ -41,7 +41,7 @@ class IdentityOperationSpec extends WordSpec with Matchers {
           (4.5, "e", 1.5, 11.0)
         ).map(Row.fromTuple)
         DataFrame.fromSparkDataFrame(
-          HelperMock.sparkSession.createDataFrame(HelperMock.sparkContext.parallelize(rows), schema))
+          HelperMock.sparkSession.createDataFrame(HelperMock.sparkSession.sparkContext.parallelize(rows), schema))
       }
       val result = operation.executeUntyped(Vector(df))(HelperMock.executionContext).head.asInstanceOf[DataFrame]
       result shouldEqual df

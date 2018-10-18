@@ -31,7 +31,7 @@ class RandomSplitSpec  extends WordSpec with Matchers {
         val schema = StructType(Seq(StructField("col", DoubleType)))
         val rows = elements.map(Row(_))
         DataFrame.fromSparkDataFrame(
-          HelperMock.sparkSession.createDataFrame(HelperMock.sparkContext.parallelize(rows), schema))
+          HelperMock.sparkSession.createDataFrame(HelperMock.sparkSession.sparkContext.parallelize(rows), schema))
       }
       val Seq(left : DataFrame, right : DataFrame) = operation.executeUntyped(Vector(df))(HelperMock.executionContext)
 

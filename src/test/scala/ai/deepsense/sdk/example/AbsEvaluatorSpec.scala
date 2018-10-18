@@ -16,14 +16,11 @@
 
 package ai.deepsense.sdk.example
 
-import org.apache.spark.sql.types.{DoubleType, StringType, StructField, StructType}
-import org.apache.spark.sql.Row
-import org.scalatest._
 import ai.deepsense.deeplang.doperables.dataframe.DataFrame
-import ai.deepsense.deeplang.doperables.spark.wrappers.evaluators.RegressionEvaluator
-import ai.deepsense.deeplang.params.ParamPair
 import ai.deepsense.deeplang.params.selections.NameSingleColumnSelection
-import ai.deepsense.sdk.example.HelperMock
+import org.apache.spark.sql.Row
+import org.apache.spark.sql.types.{DoubleType, StructField, StructType}
+import org.scalatest._
 
 class AbsEvaluatorSpec extends WordSpec with Matchers {
   "AbsEvaluator" should {
@@ -33,7 +30,7 @@ class AbsEvaluatorSpec extends WordSpec with Matchers {
         val schema = StructType(Seq(StructField("col1", DoubleType)))
         val rows = Seq(1.0, 0.0, -2.0).map(Row(_))
         DataFrame.fromSparkDataFrame(
-          HelperMock.sparkSession.createDataFrame(HelperMock.sparkContext.parallelize(rows), schema))
+          HelperMock.sparkSession.createDataFrame(HelperMock.sparkSession.sparkContext.parallelize(rows), schema))
       }
       evaluator.setPredictionColumn(NameSingleColumnSelection("col1"))
 
