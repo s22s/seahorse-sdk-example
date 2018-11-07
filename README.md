@@ -15,11 +15,7 @@ docker-compose.yml or Vagrantfile (depending whether you run Docker or Vagrant).
 This is a simple example designed to show a minimum set of steps needed to create an operation. You can find full source
 in [IdentityOperation.scala](src/main/scala/io/deepsense/sdk/example/IdentityOperation.scala).
 
-First, we need to annotate the operation so that Seahorse knows that it should be registered in the operation catalogue.
-```scala
-  @Register
-```
-We extend `DOperation1To1[DataFrame, DataFrame]`
+First, we extend `DOperation1To1[DataFrame, DataFrame]`
 because our operation takes one `DataFrame` as input and return one `DataFrame` on the output.
 ```scala
   final class IdentityOperation
@@ -128,8 +124,8 @@ and we return no warnings.
   }
 ```
 
-## Second operation registration method
-`SPIRegistration` is an example of another method of operation registration in Seahorse. It extends `CatalogRegistrant` and overloads `register` method. Inside this method you pass factories operations as arguments to `registerOperation` method. 
+## Operation registration method
+`SPIRegistration` is an example of operation registration in Seahorse. It extends `CatalogRegistrant` and overloads `register` method. Inside this method you pass factories operations as arguments to `registerOperation` method. 
 
 For example:
 ```scala
