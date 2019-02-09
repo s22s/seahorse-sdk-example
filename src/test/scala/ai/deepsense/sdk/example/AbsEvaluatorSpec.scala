@@ -21,6 +21,7 @@ import ai.deepsense.deeplang.params.selections.NameSingleColumnSelection
 import org.apache.spark.sql.Row
 import org.apache.spark.sql.types.{DoubleType, StructField, StructType}
 import org.scalatest._
+import ai.deepsense.deeplang.testkit._
 
 class AbsEvaluatorSpec extends WordSpec with Matchers {
   "AbsEvaluator" should {

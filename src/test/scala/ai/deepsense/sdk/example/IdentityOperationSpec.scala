@@ -19,7 +19,7 @@ package ai.deepsense.sdk.example
 import org.apache.spark.sql.types.{DoubleType, StringType, StructField, StructType}
 import org.apache.spark.sql.Row
 import org.scalatest._
-
+import ai.deepsense.deeplang.testkit._
 import ai.deepsense.deeplang.doperables.dataframe.DataFrame
 
 class IdentityOperationSpec extends WordSpec with Matchers {
@@ -44,7 +44,7 @@ class IdentityOperationSpec extends WordSpec with Matchers {
           HelperMock.sparkSession.createDataFrame(HelperMock.sparkSession.sparkContext.parallelize(rows), schema))
       }
       val result = operation.executeUntyped(Vector(df))(HelperMock.executionContext).head.asInstanceOf[DataFrame]
-      result shouldEqual df
+      result should equal (df)
     }
   }
 }
